@@ -4,12 +4,12 @@ import chromadb
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import os
 
-#CONFIGURATIOINS
+#Configuration
 EMBED_MODEL = "nomic-embed-text"
 CHAT_MODEL = "deepseek-r1:8b" #qwen2.5:3b,deepseek-r1:8b,qwen3:8b,gemma3:4b
 COLLECTION_NAME = "articles_demo"
 
-#CLIENTS 
+#Client
 chroma_client = chromadb.PersistentClient()
 ollama_client = Client(host="http://localhost:11434")
 
@@ -17,7 +17,7 @@ collection = chroma_client.get_or_create_collection(
     name=COLLECTION_NAME
 )
 
-#RESUME COUNTER
+#Count Resume
 counter = 0
 if os.path.exists("counter.txt"):
     with open("counter.txt", "r") as f:
@@ -32,7 +32,7 @@ splitter = RecursiveCharacterTextSplitter(
 
 print("Reading articles.jsonl and generating embeddings:")
 
-#INGEST DATA 
+#data ingestion
 with open("articles.jsonl", "r", encoding="utf-8") as f:
     for article_index, line in enumerate(f):
 
@@ -88,7 +88,7 @@ def ask_chatbot(question, top_k=3):
         input=f"query: {question}"
     )["embeddings"][0]
 
-    # Retrieve relevant chunks
+    # Retrieving relevant chunks
     results = collection.query(
         query_embeddings=[query_embed],
         n_results=top_k,
@@ -107,7 +107,7 @@ Question:
 
 Answer:
 """
-       #  Generate answer
+       #  Generating answer
     response = ollama_client.generate(
         model=CHAT_MODEL,
         prompt=prompt,
@@ -116,7 +116,7 @@ Answer:
 
     return response["response"].strip()
 
-#INTERACTIVE LOOP
+#interactiveLoop
 print("\n Article Chatbot is Ready!")
 print("Type your question or type 'exit' or 'quit' to quit\n")
 
@@ -131,3 +131,4 @@ while True:
     print("\nBot Answer:", answer, "\n")
     
     
+

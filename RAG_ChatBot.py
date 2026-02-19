@@ -6,7 +6,7 @@ import os
 
 #Configuration
 EMBED_MODEL = "nomic-embed-text"
-CHAT_MODEL = "deepseek-r1:8b" #qwen2.5:3b,deepseek-r1:8b,qwen3:8b,gemma3:4b,AB
+CHAT_MODEL = "deepseek-r1:8b" #qwen2.5:3b,deepseek-r1:8b,qwen3:8b,gemma3:4b
 COLLECTION_NAME = "articles_demo"
 
 #Client
@@ -148,8 +148,9 @@ while True:
 
 
 
-#Aarogya
+
     
+
 
 
 
